@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - LearnHub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">LearnHub</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html" class="active">Courses</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Courses</h1>
+            <p>Choose from our wide variety of courses</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <input type="text" id="searchBox" class="search-box" placeholder="Search courses...">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="programming">Programming</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="business">Business</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Grid -->
+    <section class="courses-section">
+        <div class="container">
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Course Cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About LearnHub</h4>
+                    <p>Your ultimate destination for online learning and skill development.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: afridisalmankha@gmail.com</p>
+                    <p>Instructor: Salman Khan</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 LearnHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const coursesData = [
+            {
+                id: 1,
+                title: "Web Development Fundamentals",
+                category: "programming",
+                price: 49.99,
+                rating: 4.8,
+                students: 2540,
+                description: "Learn HTML, CSS, and JavaScript from scratch",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 2,
+                title: "Advanced JavaScript",
+                category: "programming",
+                price: 59.99,
+                rating: 4.9,
+                students: 1890,
+                description: "Master ES6+, async programming, and design patterns",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 3,
+                title: "Data Science Essentials",
+                category: "programming",
+                price: 69.99,
+                rating: 4.7,
+                students: 1650,
+                description: "Python, Machine Learning, and Data Analysis",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 4,
+                title: "Mobile App Development",
+                category: "programming",
+                price: 79.99,
+                rating: 4.8,
+                students: 1420,
+                description: "Build iOS and Android applications",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 5,
+                title: "UI/UX Design Masterclass",
+                category: "design",
+                price: 54.99,
+                rating: 4.9,
+                students: 980,
+                description: "Learn modern design principles and tools",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 6,
+                title: "Graphic Design Pro",
+                category: "design",
+                price: 44.99,
+                rating: 4.6,
+                students: 1200,
+                description: "Master Adobe Creative Suite",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 7,
+                title: "Business Strategy 101",
+                category: "business",
+                price: 39.99,
+                rating: 4.5,
+                students: 2100,
+                description: "Essential business strategies and leadership",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 8,
+                title: "Digital Marketing",
+                category: "business",
+                price: 49.99,
+                rating: 4.7,
+                students: 1540,
+                description: "SEO, Social Media, and Content Marketing",
+                instructor: "Salman Khan"
+            },
+            {
+                id: 9,
+                title: "Cloud Computing with AWS",
+                category: "programming",
+                price: 89.99,
+                rating: 4.8,
+                students: 890,
+                description: "Master AWS cloud services",
+                instructor: "Salman Khan"
+            }
+        ];
+
+        function renderCourses(filter = 'all', search = '') {
+            const coursesGrid = document.getElementById('coursesGrid');
+            let filtered = coursesData;
+
+            if (filter !== 'all') {
+                filtered = filtered.filter(course => course.category === filter);
+            }
+
+            if (search) {
+                filtered = filtered.filter(course => 
+                    course.title.toLowerCase().includes(search.toLowerCase()) ||
+                    course.description.toLowerCase().includes(search.toLowerCase())
+                );
+            }
+
+            coursesGrid.innerHTML = filtered.map(course => `
+                <div class="course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, ${getGradient(course.id)});"></div>
+                    <div class="course-info">
+                        <h3>${course.title}</h3>
+                        <p class="course-desc">${course.description}</p>
+                        <p class="instructor">By ${course.instructor}</p>
+                        <div class="course-meta">
+                            <span class="rating">⭐ ${course.rating}</span>
+                            <span class="students">${course.students.toLocaleString()} students</span>
+                        </div>
+                        <div class="course-footer">
+                            <span class="price">$${course.price}</span>
+                            <button class="btn btn-small">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getGradient(id) {
+            const gradients = [
+                '#667eea 0%, #764ba2 100%',
+                '#f093fb 0%, #f5576c 100%',
+                '#4facfe 0%, #00f2fe 100%',
+                '#43e97b 0%, #38f9d7 100%',
+                '#fa709a 0%, #fee140 100%',
+                '#30cfd0 0%, #330867 100%',
+                '#a8edea 0%, #fed6e3 100%',
+                '#ff9a56 0%, #ff6a88 100%',
+                '#2e2e78 0%, #1c92d2 100%'
+            ];
+            return gradients[(id - 1) % gradients.length];
+        }
+
+        // Initial render
+        renderCourses();
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.dataset.filter;
+                const search = document.getElementById('searchBox').value;
+                renderCourses(filter, search);
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function() {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            renderCourses(activeFilter, this.value);
+        });
+    </script>
+</body>
+</html>
